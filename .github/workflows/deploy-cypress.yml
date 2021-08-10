@@ -1,4 +1,4 @@
-name: Build and Deploy to Staging
+name: Cypress testing
 
 on:
   push:
@@ -19,3 +19,6 @@ jobs:
           repository: hypha-dao/envctl
           ref: feature/full-environment
       - run: pwd
+      - run: ls -latr
+      - run: echo $GITHUB_WORKSPACE
+      - run: ls -latr $GITHUB_WORKSPACE
