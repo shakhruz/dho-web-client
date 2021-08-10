@@ -3,7 +3,6 @@ name: Cypress testing
 on:
   push:
     branches: [ feature/cypress-testing-workflow ]
-#
 jobs:
   test:
     name: test-dev
@@ -18,8 +17,9 @@ jobs:
         with:
           repository: hypha-dao/envctl
           ref: feature/full-environment
+          path: envctl
       - run: pwd
       - run: ls -latr
       - run: echo $GITHUB_WORKSPACE
       - run: ls -latr $GITHUB_WORKSPACE
-      - run: mkdir -p /envctl/repos
+      - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
