@@ -100,7 +100,7 @@ const getBestEndpoint = async () => {
 const pingEndpoint = async (url) => {
   const start = Date.now()
   try {
-    await axios.post(`${url}/v1/get_info`, {
+    await axios.post(`${url}/v1/chain/get_info`, {
       timeout: 5000
     })
   } catch (e) {
