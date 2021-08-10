@@ -1,0 +1,21 @@
+name: Build and Deploy to Staging
+
+on:
+  push:
+    branches: [ feature/cypress-testing-workflow ]
+
+jobs:
+  test:
+    name: test-dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16.3'
+      - name: Checkout envctl
+        uses: actions/checkout@v2
+        with:
+          repository: hypha-dao/envctl
+          ref: feature/full-environment
+      - run: pwd
