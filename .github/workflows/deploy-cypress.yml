@@ -33,3 +33,9 @@ jobs:
       - name: Run backend
         run: go run . backend start
         working-directory: ./envctl
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
+      - name: Run backend
+        run: go run . populate pretend
+        working-directory: ./envctl
