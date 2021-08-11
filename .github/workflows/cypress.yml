@@ -48,7 +48,6 @@ jobs:
         with:
           spec: cypress/integration/simple.js
           record: true
-          headless: true
           start: yarn dev --port=8085
           wait-on: 'http://localhost:8085'
           wait-on-timeout: 180
