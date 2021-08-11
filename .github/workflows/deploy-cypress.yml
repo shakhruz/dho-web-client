@@ -23,7 +23,13 @@ jobs:
       - run: ls -latr $GITHUB_WORKSPACE
       - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
       - run: ls -latr
-      - run: cp envctl-github-workflow.yaml envctl.yaml
+      - name: Download eosio.cdt
+        run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-ubuntu-18.04_amd64.deb
+      - name: Install eosio.cdt
+        run: apt install ./eosio.cdt_1.8.1-ubuntu-18.04_amd64.deb
+      - name: Set envctl config file
+        run: cp envctl-github-workflow.yaml envctl.yaml
         working-directory: ./envctl
-      - run: go run . backend start
+      - name: Run backend
+        run: go run . backend start
         working-directory: ./envctl
