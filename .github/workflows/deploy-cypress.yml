@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     name: test-dev
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Install go
         uses: actions/setup-go@v2
@@ -24,7 +24,7 @@ jobs:
       - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
       - run: ls -latr
       - name: Download eosio.cdt
-        run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-ubuntu-18.04_amd64.deb
+        run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
       - name: Install eosio.cdt
         run: apt install ./eosio.cdt_1.8.1-ubuntu-18.04_amd64.deb
       - name: Set envctl config file
