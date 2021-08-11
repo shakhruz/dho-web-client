@@ -73,7 +73,7 @@ export default {
         this.loading = true
         this.getMember()
         this.getProfile()
-        this.getJoinDate()
+        // this.getJoinDate()
         // this.getRecentVotes()
       }
     },
