@@ -1,0 +1,41 @@
+name: Cypress testing
+
+on:
+  push:
+    branches: [ feature/cypress-testing-workflow ]
+jobs:
+  test:
+    name: test-dev
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16.3'
+      - name: Checkout envctl
+        uses: actions/checkout@v2
+        with:
+          repository: hypha-dao/envctl
+          ref: feature/full-environment
+          path: envctl
+      - run: pwd
+      - run: echo $GITHUB_WORKSPACE
+      - run: ls -latr $GITHUB_WORKSPACE
+      - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
+      - run: ls -latr
+      - name: Download eosio.cdt
+        run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
+      - name: Install eosio.cdt
+        run: sudo apt install ./eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
+      - name: Set envctl config file
+        run: cp envctl-github-workflow.yaml envctl.yaml
+        working-directory: ./envctl
+      - name: Run backend
+        run: go run . backend start
+        working-directory: ./envctl
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
+      - name: Run backend
+        run: go run . populate pretend
+        working-directory: ./envctl

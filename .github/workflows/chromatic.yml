@@ -6,7 +6,7 @@ name: 'Chromatic'
 # Event for the workflow
 on:
   push:
-    branches-ignore: [ master ]
+    branches-ignore: [ master, feature/cypress-testing-workflow ]
 
 # List of jobs
 jobs:
