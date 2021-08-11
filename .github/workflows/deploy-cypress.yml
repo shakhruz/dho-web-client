@@ -19,7 +19,11 @@ jobs:
           ref: feature/full-environment
           path: envctl
       - run: pwd
-      - run: ls -latr
       - run: echo $GITHUB_WORKSPACE
       - run: ls -latr $GITHUB_WORKSPACE
       - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
+      - run: ls -latr
+      - run: pushd envctl 
+      - run: ls -latr
+      - run: cp envctl-github-workflow.yaml envctl.yaml
+      - run: go run . backend start
