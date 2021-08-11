@@ -23,7 +23,7 @@ jobs:
       - run: ls -latr $GITHUB_WORKSPACE
       - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
       - run: ls -latr
-      - run: pushd envctl 
-      - run: ls -latr
       - run: cp envctl-github-workflow.yaml envctl.yaml
+        working-directory: ./envctl
       - run: go run . backend start
+        working-directory: ./envctl
