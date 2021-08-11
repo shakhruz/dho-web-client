@@ -8,37 +8,37 @@ jobs:
     name: test-dev
     runs-on: ubuntu-20.04
     steps:
-      - name: Install go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '^1.16.3'
-      - name: Checkout envctl
-        uses: actions/checkout@v2
-        with:
-          repository: hypha-dao/envctl
-          ref: feature/full-environment
-          path: envctl
-      - run: pwd
-      - run: echo $GITHUB_WORKSPACE
-      - run: ls -latr $GITHUB_WORKSPACE
-      - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
-      - run: ls -latr
-      - name: Download eosio.cdt
-        run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
-      - name: Install eosio.cdt
-        run: sudo apt install ./eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
-      - name: Set envctl config file
-        run: cp envctl-github-workflow.yaml envctl.yaml
-        working-directory: ./envctl
-      - name: Run backend
-        run: go run . backend start
-        working-directory: ./envctl
-      - name: Sleep for 60 seconds
-        run: sleep 60s
-        shell: bash
-      - name: Populate with pretend data
-        run: go run . populate pretend
-        working-directory: ./envctl
+      # - name: Install go
+      #   uses: actions/setup-go@v2
+      #   with:
+      #     go-version: '^1.16.3'
+      # - name: Checkout envctl
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: hypha-dao/envctl
+      #     ref: feature/full-environment
+      #     path: envctl
+      # - run: pwd
+      # - run: echo $GITHUB_WORKSPACE
+      # - run: ls -latr $GITHUB_WORKSPACE
+      # - run: mkdir -p $GITHUB_WORKSPACE/envctl-data/repos
+      # - run: ls -latr
+      # - name: Download eosio.cdt
+      #   run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
+      # - name: Install eosio.cdt
+      #   run: sudo apt install ./eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
+      # - name: Set envctl config file
+      #   run: cp envctl-github-workflow.yaml envctl.yaml
+      #   working-directory: ./envctl
+      # - name: Run backend
+      #   run: go run . backend start
+      #   working-directory: ./envctl
+      # - name: Sleep for 60 seconds
+      #   run: sleep 60s
+      #   shell: bash
+      # - name: Populate with pretend data
+      #   run: go run . populate pretend
+      #   working-directory: ./envctl
       - name: Checkout web app
         uses: actions/checkout@v2
         with: 
@@ -52,7 +52,7 @@ jobs:
           wait-on: 'http://localhost:8085'
           wait-on-timeout: 180
           working-directory: ./app
-          config: defaultCommandTimeout=60000
+          config: defaultCommandTimeout=160000
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

@@ -1,3 +1,4 @@
 {
-    "projectId": "atfpge"
+    "projectId": "atfpge",
+    "defaultCommandTimeout": 60000
 }
