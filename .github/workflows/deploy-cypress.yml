@@ -26,7 +26,7 @@ jobs:
       - name: Download eosio.cdt
         run: wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.8.1/eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
       - name: Install eosio.cdt
-        run: sudo apt install ./eosio.cdt_1.8.1-ubuntu-18.04_amd64.deb
+        run: sudo apt install ./eosio.cdt_1.8.1-1-ubuntu-20.04_amd64.deb
       - name: Set envctl config file
         run: cp envctl-github-workflow.yaml envctl.yaml
         working-directory: ./envctl
