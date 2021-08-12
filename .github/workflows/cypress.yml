@@ -57,11 +57,11 @@ jobs:
           wait-on-timeout: 180
           working-directory: ./app
           config: defaultCommandTimeout=160000
-        # env:
-        #   # pass the Dashboard record key as an environment variable
-        #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-        #   # pass GitHub token to allow accurately detecting a build vs a re-run build
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # pass GitHub token to allow accurately detecting a build vs a re-run build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         if: always()
         with:
