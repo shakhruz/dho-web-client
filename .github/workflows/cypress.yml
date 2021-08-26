@@ -43,7 +43,8 @@ jobs:
       - name: Set Env File
         run: cp .env.local .env
         working-directory: ./app
-      - name: Cypress run
+      - id: cypress-run
+        name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           spec: cypress/integration/simple.js
@@ -59,13 +60,13 @@ jobs:
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
-        if: failure()
+        if: steps.cypress-run.conclusion == 'failure'
         with:
           name: cypress-screenshots
           path: app/cypress/screenshots
       # Test run video was always captured, so this action uses "always()" condition
       - uses: actions/upload-artifact@v1
-        if: always()
+        if: steps.cypress-run.conclusion == 'failure' || steps.cypress-run.conclusion == 'success'
         with:
           name: cypress-videos
           path: app/cypress/videos
