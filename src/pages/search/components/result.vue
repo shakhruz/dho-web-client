@@ -3,9 +3,9 @@ widget.bg-internal-bg.q-mb-sm
   .row.items-center.justify-between
     q-btn(round unelevated :icon="icon" color="primary" text-color="white" size="sm" :ripple="false")
     .q-ml-md.q-mr-auto.spacingInfo
-      .text-body1.text-bold {{ title.length > maxChar ? title.substring(0,maxChar) + '...' : title }}
-      .text-body2.text-italic.grey-color {{ getType }}
-      div.text-body2.grey-color(v-html="getHighlight")
+      .h-h6 {{ title.length > maxChar ? title.substring(0,maxChar) + '...' : title }}
+      .h-b3.text-body {{ getType }}
+      div.h-tag.text-body(v-html="getHighlight")
     chips(:tags="getTags")
 </template>
 
@@ -63,6 +63,12 @@ export default {
       }
       if (this.status === 'suspended') {
         return [{ label: 'Suspended', color: 'negative' }]
+      }
+      if (this.status === 'rejected') {
+        return [{ label: 'Archived', color: 'grey' }]
+      }
+      if (this.status === 'staging') {
+        return [{ label: 'Staging', color: 'secondary' }]
       }
       return null
     },
