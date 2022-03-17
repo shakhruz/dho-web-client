@@ -5,7 +5,10 @@ import { validation } from '~/mixins/validation'
 export default {
   name: 'treasury-new',
   mixins: [validation],
-
+  components: {
+    Widget: () => import('~/components/common/widget.vue'),
+    MetricLink: () => import('~/components/dashboard/metric-link.vue')
+  },
   meta: {
     title: 'Treasury'
   },
@@ -204,42 +207,42 @@ export default {
 <template lang="pug">
 q-page.q-pa-lg
   q-dialog(
-    v-model="showEndorse"
-  )
-    q-card(style="width:450px")
-      q-card-section.text-center
-        .text-h6 Endorse payment {{ `#${endorseForm.paymentId}` }}
-      q-card-section
-        q-input.q-mb-sm(
-          ref="amount"
-          v-model="endorseForm.amount"
-          color="accent"
-          label="Amount"
-          outlined
-          disable
-          dense
-        )
-        q-input(
-          ref="comment"
-          v-model="endorseForm.comment"
-          color="accent"
-          label="Comment"
-          outlined
-          dense
-        )
-      q-card-actions(align="right")
-        q-btn(
-          label="Cancel"
-          flat
-          @click="onCancelEndorse"
-        )
-        q-btn(
-          label="Endorse"
-          color="primary"
-          unelevated
-          @click="onEndorse"
-          :loading="submittingEndorse"
-        )
+      v-model="showEndorse"
+    )
+      q-card(style="width:450px")
+        q-card-section.text-center
+          .text-h6 Endorse payment {{ `#${endorseForm.paymentId}` }}
+        q-card-section
+          q-input.q-mb-sm(
+            ref="amount"
+            v-model="endorseForm.amount"
+            color="accent"
+            label="Amount"
+            outlined
+            disable
+            dense
+          )
+          q-input(
+            ref="comment"
+            v-model="endorseForm.comment"
+            color="accent"
+            label="Comment"
+            outlined
+            dense
+          )
+        q-card-actions(align="right")
+          q-btn(
+            label="Cancel"
+            flat
+            @click="onCancelEndorse"
+          )
+          q-btn(
+            label="Endorse"
+            color="primary"
+            unelevated
+            @click="onEndorse"
+            :loading="submittingEndorse"
+          )
   q-dialog(
     v-model="showNewTrx"
   )
@@ -307,25 +310,7 @@ q-page.q-pa-lg
     dense
   )
   .row
-    .redemptions-list
-      .filters.flex.justify-end.items-center
-        q-btn(
-          label="OPEN"
-          :color="filter === 'OPEN' ? 'primary' : 'white'"
-          unelevated
-          flat
-          @click="filter = 'OPEN'"
-          style="font-weight: 700"
-        )
-        .separator
-        q-btn(
-          label="ALL"
-          :color="filter === 'ALL' ? 'primary' : 'white'"
-          unelevated
-          flat
-          @click="filter = 'ALL'"
-          style="font-weight: 700"
-        )
+    .col-9.q-px-sm.q-py-md
       q-table(
         card-class="wallet-table"
         :data="redemptionsFiltered"
@@ -460,47 +445,57 @@ q-page.q-pa-lg
                     )
                       q-item-section
                         q-item-label TRX {{ i + 1}}
-    .tokens-wallet
-      .token-info.row.flex.items-center
-        img.icon(src="~assets/icons/seeds.png")
-        div
-          .name SEEDS
-          q-spinner-dots(
-            v-if="loading"
-            color="primary"
-            size="30px"
-          )
-          .amount(v-else) {{ tokens.seeds }}
-      .token-info.row.flex.items-center
-        img.icon(src="~assets/icons/hypha.svg")
-        div
-          .name HYPHA
-          q-spinner-dots(
-            v-if="loading"
-            color="primary"
-            size="30px"
-          )
-          .amount(v-else) {{ tokens.hypha }}
-      .token-info.row.flex.items-center
-        img.icon(src="~assets/icons/husd.svg")
-        div
-          .name HUSD
-          q-spinner-dots(
-            v-if="loading"
-            color="primary"
-            size="30px"
-          )
-          .amount(v-else) {{ tokens.husd }}
+    .col-3.q-pa-sm.q-py-md
+      widget(title='Current balance')
+        .q-py-md.flex.items-center Tempora dolorem neque quiquia tempora sed labore amet.
+        .token-info.row.flex.items-center
+          .row
+            .col-12
+              .h-btn1.text-heading HUSD
+            .col-12
+              img.icon(src="~assets/icons/husd.svg")
+          div
+            q-spinner-dots(
+              v-if="loading"
+              color="primary"
+              size="30px"
+            )
+            .amount(v-else) {{ tokens.husd }}
+        .token-info.row.flex.items-center
+          .row
+              .h-btn1.text-heading SEEDS
+          .row
+              img.icon(src="~assets/icons/seeds.png")
+          div
+            q-spinner-dots(
+              v-if="loading"
+              color="primary"
+              size="30px"
+            )
+            .amount(v-else) {{ tokens.seeds }}
+        .token-info.row.flex.items-center
+          .row
+            .col-12
+              .h-btn1.text-heading HYPHA
+            .col-12
+              img.icon(src="~assets/icons/hypha.svg")
+          div
+            q-spinner-dots(
+              v-if="loading"
+              color="primary"
+              size="30px"
+            )
+            .amount(v-else) {{ tokens.hypha }}
 </template>
 
 <style lang="stylus" scoped>
 .redemptions-list
   width calc(100% - 200px)
-.tokens-wallet
-  width 250px
-  position fixed
-  right -40px
-  margin-top: 35px;
+// .tokens-wallet
+//   width 250px
+//   position fixed
+//   right -40px
+//   margin-top: 35px;
 .token-info
   background white
   border-radius 50px
@@ -510,10 +505,6 @@ q-page.q-pa-lg
   .icon
     margin-right 15px
     width 40px
-  .name
-    text-transform uppercase
-    font-weight 600
-    font-size 16px
   .amount
     font-size 16px
 .redeem-icon
